@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol PannableTableViewCell: class {
+public protocol PannableTableViewCell: class {
     
     var frontContentView: UIView! {get}
     
@@ -26,7 +26,7 @@ protocol PannableTableViewCell: class {
 
 extension PannableTableViewCell where Self: UITableViewCell {
     
-    var tx: CGFloat {
+    public var tx: CGFloat {
         get {
             return frontContentView.transform.tx
         }
@@ -35,7 +35,7 @@ extension PannableTableViewCell where Self: UITableViewCell {
         }
     }
     
-    func expand(_ animated: Bool) {
+    public func expand(_ animated: Bool) {
         if animated {
             self.backContentView.isHidden = false
             UIView.animate(withDuration: 0.2, animations: { () -> Void in
@@ -49,7 +49,7 @@ extension PannableTableViewCell where Self: UITableViewCell {
         }
     }
     
-    func collapse(_ animated: Bool) {
+    public func collapse(_ animated: Bool) {
         if animated {
             UIView.animate(withDuration: 0.2, animations: { () -> Void in
                 self.tx = 0
@@ -62,7 +62,7 @@ extension PannableTableViewCell where Self: UITableViewCell {
         }
     }
     
-    var maxTx: CGFloat {
+    public var maxTx: CGFloat {
         return backContentView.bounds.width
     }
     
