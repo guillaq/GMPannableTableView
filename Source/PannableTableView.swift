@@ -80,7 +80,7 @@ public class PannableTableView: UITableView, UIGestureRecognizerDelegate {
         
     }
     
-    open func panRecognized(_ sender: UIPanGestureRecognizer) {
+    @objc open func panRecognized(_ sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .began:
             self.currentPannedCell?.backContentView.isHidden = false
