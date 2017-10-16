@@ -1,5 +1,5 @@
 PODS:
-  - GMPannableTableView (2.0.0)
+  - GMPannableTableView (1.1.0)
 
 DEPENDENCIES:
   - GMPannableTableView (from `./`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: ./
 
 SPEC CHECKSUMS:
-  GMPannableTableView: bde586bad2402e2b5358a941d5d5e1076915dc63
+  GMPannableTableView: 53e037fe94897637ad711190e1338ffa6451e819
 
 PODFILE CHECKSUM: db83fa57534b60a6204c2190a16fb96e0191f4f4
 
