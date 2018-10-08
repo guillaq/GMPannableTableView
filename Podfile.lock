@@ -6,11 +6,11 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   GMPannableTableView:
-    :path: ./
+    :path: "./"
 
 SPEC CHECKSUMS:
-  GMPannableTableView: 53e037fe94897637ad711190e1338ffa6451e819
+  GMPannableTableView: b780a23cc1dcba58eab2fe149dd3f2d8beecf196
 
 PODFILE CHECKSUM: db83fa57534b60a6204c2190a16fb96e0191f4f4
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.3
