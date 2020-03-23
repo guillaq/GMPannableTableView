@@ -9,39 +9,39 @@
 import UIKit
 
 @objc public protocol PannableTableViewDelegate: UITableViewDelegate {
-    
+
     @objc optional func tableView(_ tableView: PannableTableView, shouldStartSwipeForCellAtIndexPath indexPath: IndexPath) -> Bool
-    
+
 }
 
 public class PannableTableView: UITableView, UIGestureRecognizerDelegate {
-    
+
     fileprivate var savedPannedFrame: CGRect?
-    
+
     fileprivate(set) var currentPannedCell: PannableTableViewCell?
-    
+
     fileprivate(set) var currentPannedIndexPath: IndexPath?
-    
+
     fileprivate var savedTx: CGFloat?
-    
+
     fileprivate var pan: UIPanGestureRecognizer!
-    
+
     var pannableDelegate: PannableTableViewDelegate? {
         return self.delegate as? PannableTableViewDelegate
     }
-    
+
     public var isPanned: Bool {
         return currentPannedCell != nil
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         pan = UIPanGestureRecognizer(target: self, action: #selector(PannableTableView.panRecognized(_:)))
         pan.delegate = self
         addGestureRecognizer(pan)
     }
-    
+
     open override func dequeueReusableCell(withIdentifier identifier: String) -> UITableViewCell? {
         let cell = super.dequeueReusableCell(withIdentifier: identifier)
         if let temp = cell as? PannableTableViewCell {
@@ -49,7 +49,7 @@ public class PannableTableView: UITableView, UIGestureRecognizerDelegate {
         }
         return cell
     }
-    
+
     open override func dequeueReusableCell(withIdentifier identifier: String, for indexPath: IndexPath) -> UITableViewCell {
         let cell = super.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         if let temp = cell as? PannableTableViewCell {
@@ -57,9 +57,9 @@ public class PannableTableView: UITableView, UIGestureRecognizerDelegate {
         }
         return cell
     }
-    
+
     open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        
+
         if gestureRecognizer == pan {
             if let indexPath = self.indexPathForRow(at: gestureRecognizer.location(in: self)) {
                 if let cell = self.cellForRow(at: indexPath) as? PannableTableViewCell {
@@ -77,9 +77,9 @@ public class PannableTableView: UITableView, UIGestureRecognizerDelegate {
         } else {
             return super.gestureRecognizerShouldBegin(gestureRecognizer)
         }
-        
+
     }
-    
+
     @objc open func panRecognized(_ sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .began:
@@ -99,21 +99,21 @@ public class PannableTableView: UITableView, UIGestureRecognizerDelegate {
                 tx = 0
                 clearPanned(false)
             }
-            
+
             UIView.animate(withDuration: 0.15, animations: { () -> Void in
                 tempCell.tx = tx
             })
             break
         }
     }
-    
+
     open func clearPanned(_ animated: Bool) {
         self.currentPannedCell?.collapse(animated)
         self.savedPannedFrame = nil
         self.currentPannedCell = nil
         self.currentPannedIndexPath = nil
     }
-    
+
     open func expandCellAtIndexPath(_ indexPath: IndexPath, animated: Bool = true) {
         if let cell = cellForRow(at: indexPath) as? PannableTableViewCell {
             if currentPannedCell === cell {
@@ -125,7 +125,7 @@ public class PannableTableView: UITableView, UIGestureRecognizerDelegate {
             savedPannedFrame = self.convert(cell.backContentView.frame, from: cell.backContentView.superview!)
         }
     }
-    
+
     open func collapseCellAtIndexPath(_ indexPath: IndexPath, animated: Bool = true) {
         if let cell = cellForRow(at: indexPath) as? PannableTableViewCell {
             if currentPannedCell === cell {
@@ -133,7 +133,7 @@ public class PannableTableView: UITableView, UIGestureRecognizerDelegate {
             }
         }
     }
-    
+
     open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if self.isPanned {
             if !self.savedPannedFrame!.contains(point) {
@@ -143,10 +143,10 @@ public class PannableTableView: UITableView, UIGestureRecognizerDelegate {
         }
         return super.hitTest(point, with: event)
     }
-    
+
 }
 
-fileprivate func maxmin<T: Comparable>(_ value: T, _ max: T, _ min: T) -> T{
+private func maxmin<T: Comparable>(_ value: T, _ max: T, _ min: T) -> T {
     assert(max >= min, "Careful max < min")
     if value > max {
         return max
